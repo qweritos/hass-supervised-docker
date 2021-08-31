@@ -52,11 +52,9 @@ RUN systemctl enable hassio-apparmor.service hassio-supervisor.service
 CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
 
 RUN apt-get purge --autoremove -y apt-transport-https \
-    ca-certificates \
     curl \
     gnupg \
     lsb-release \
     && rm -rf /var/lib/apt/lists/* && \
     apt-get clean autoclean \
     apt-get autoremove --yes
-    
