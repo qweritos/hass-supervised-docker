@@ -41,7 +41,7 @@ systemd-remount-fs.service \
 systemd-ask-password-wall.path && \
 systemctl set-default multi-user.target || true
 
-RUN systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target ModemManager.service
+RUN systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target ModemManager.service NetworkManager.service
 
 STOPSIGNAL SIGRTMIN+3
 
