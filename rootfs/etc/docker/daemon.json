@@ -1,4 +1,9 @@
 {
     "log-driver": "journald",
-    "storage-driver": "fuse-overlayfs"
+    "storage-driver": "fuse-overlayfs",
+    "ip6tables": true,
+    "experimental": true,
+    "log-opts": {
+        "tag": "{{.Name}}"
+    }
 }
