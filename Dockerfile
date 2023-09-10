@@ -49,12 +49,16 @@ ADD ./rootfs /
 
 RUN systemctl enable hassio-apparmor.service hassio-supervisor.service
 
+RUN wget https://github.com/home-assistant/os-agent/releases/download/1.6.0/os-agent_1.6.0_linux_x86_64.deb
+RUN dpkg -i os-agent_1.6.0_linux_x86_64.deb
+
+
 CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
 
-RUN apt-get purge --autoremove -y apt-transport-https \
-    curl \
-    gnupg \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists/* && \
-    apt-get clean autoclean \
-    apt-get autoremove --yes
+#RUN apt-get purge --autoremove -y apt-transport-https \
+#    curl \
+#    gnupg \
+#    lsb-release \
+#    && rm -rf /var/lib/apt/lists/* && \
+#    apt-get clean autoclean \
+#    apt-get autoremove --yes
