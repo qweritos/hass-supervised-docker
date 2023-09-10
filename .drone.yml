@@ -1,0 +1,9 @@
+kind: pipeline
+name: default
+type: docker
+
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    repo: registry.andrey.wtf/hass-supervised-docker
