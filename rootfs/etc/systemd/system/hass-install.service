@@ -1,0 +1,8 @@
+[Unit]
+Description=Install HASS Supervised
+
+[Service]
+ExecStart=/entrypoint.sh
+
+[Install]
+WantedBy=multi-user.target
