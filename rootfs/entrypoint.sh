@@ -9,7 +9,7 @@ wget https://github.com/home-assistant/supervised-installer/releases/latest/down
 
 apt install ./os-agent_1.6.0_linux_x86_64.deb
 
-mv /etc/docker/daemon.json /etc/docker/daemon.json.orig
+# mv /etc/docker/daemon.json /etc/docker/daemon.json.orig
 
 apt install ./homeassistant-supervised.deb
 
