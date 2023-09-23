@@ -10,7 +10,7 @@ cd /tmp
 rm -rf supervised-installer
 git clone https://github.com/home-assistant/supervised-installer.git supervised-installer
 cd supervised-installer
-git apply /mypatch.patch
+
 docker run --rm -v $(pwd):/tmp debian:bullseye-slim bash -c \
           "cd /tmp \
           && chmod 555 homeassistant-supervised/DEBIAN/p* \
