@@ -7,5 +7,5 @@ steps:
   image: plugins/kaniko
   settings:
     repo: registry.andrey.wtf/hass-supervised-docker
-    username: ""
-    password: ""
+    username: " "
+    password: " "
