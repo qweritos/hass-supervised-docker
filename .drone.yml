@@ -3,8 +3,7 @@ name: default
 type: docker
 
 steps:
-- name: kaniko
-  image: plugins/docker
-  settings:
-    repo: registry.andrey.wtf/hass-supervised-docker
-    tags: latest
+  - name: kaniko
+    image: plugins/docker
+    settings:
+      repo: registry.andrey.wtf/hass-supervised-docker
