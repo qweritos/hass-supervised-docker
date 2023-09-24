@@ -9,3 +9,4 @@ steps:
     repo: registry.andrey.wtf/hass-supervised-docker
     username: "qweritos"
     password: "dckr_pat_fZiAd7gaW7FnsCFK6MmRttxwyfw"
+    enable-cache: true
