@@ -1,5 +1,7 @@
 [Unit]
 Description=Install HASS Supervised
+Requires=docker.service
+After=docker.service
 
 [Service]
 ExecStart=/entrypoint.sh
