@@ -17,7 +17,8 @@ RUN apt-get install -y \
   systemd-journal-remote \
   systemd-resolved \
   nano \
-  inetutils-ping
+  inetutils-ping \
+  bluez
 
 RUN curl -fsSL get.docker.com | sh
 
@@ -42,7 +43,8 @@ RUN systemctl mask -- \
   cgproxy.service \
   systemd-tmpfiles-setup-dev.service \
   systemd-remount-fs.service \
-  systemd-ask-password-wall.path && \
+  systemd-ask-password-wall.path \
+  systemd-logind && \
   systemctl set-default multi-user.target || true
 
 RUN systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target ModemManager.service
