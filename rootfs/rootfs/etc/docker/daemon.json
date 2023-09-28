@@ -1,6 +1,6 @@
 {
     "log-driver": "journald",
-    "storage-driver": "fuse-overlayfs",
+    "storage-driver": "overlay2",
     "ip6tables": true,
     "experimental": true,
     "log-opts": {
