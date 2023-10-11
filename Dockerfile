@@ -18,7 +18,8 @@ RUN apt-get install -y \
   systemd-resolved \
   nano \
   inetutils-ping \
-  bluez
+  bluez \
+  iproute2
 
 RUN curl -fsSL get.docker.com | sh
 
