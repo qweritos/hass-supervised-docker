@@ -19,7 +19,8 @@ RUN apt-get install -y \
   nano \
   inetutils-ping \
   bluez \
-  iproute2
+  iproute2 \
+  httping
 
 RUN curl -fsSL get.docker.com | sh
 
