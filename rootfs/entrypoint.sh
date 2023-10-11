@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-mount --make-rshared /usr/share/hassio
+export DEBIAN_FRONTEND=noninteractive
 
+mount --make-rshared /usr/share/hassio
 
 cd /tmp
 
