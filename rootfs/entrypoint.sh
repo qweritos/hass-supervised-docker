@@ -27,4 +27,8 @@ apt install -y ./supervised-installer/homeassistant-supervised.deb
 
 systemctl restart docker
 
+while ! httping -qc1 http://localhost:8123 ; do sleep 1 ; done
+
+docker restart hassio_supervisor
+
 exec "$@"
