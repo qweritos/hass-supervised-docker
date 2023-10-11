@@ -25,6 +25,6 @@ rm -rf /etc/docker/*
 
 apt install -y ./supervised-installer/homeassistant-supervised.deb
 
-docker restart hassio_supervisor
+systemctl restart docker
 
 exec "$@"
