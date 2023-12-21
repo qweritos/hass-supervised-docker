@@ -20,7 +20,9 @@ RUN apt-get install -y \
   inetutils-ping \
   bluez \
   iproute2 \
-  httping
+  httping \
+  avahi-daemon avahi-utils libnss-mdns \
+  bash-completion
 
 RUN curl -fsSL get.docker.com | sh
 
@@ -55,7 +57,7 @@ STOPSIGNAL SIGRTMIN+3
 
 ADD ./rootfs /
 
-RUN systemctl enable systemd-journal-remote.service systemd-resolved systemd-journal-gatewayd hass-install
+RUN systemctl enable systemd-journal-remote.service systemd-resolved systemd-journal-gatewayd hass-install avahi-daemon
 
 # ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
