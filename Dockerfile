@@ -1,9 +1,16 @@
 FROM debian:12
 
+LABEL org.opencontainers.image.title="Home Assistant Supervised in docker"
+LABEL org.opencontainers.image.authors="Andrey Artamonychev<me@andrey.wtf>"
+LABEL org.opencontainers.image.vendor="Andrey Artamonychev"
+LABEL org.opencontainers.image.source="https://github.com/qweritos/hass-supervised-docker"
+LABEL org.opencontainers.image.documentation="https://github.com/qweritos/hass-supervised-docker"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.description="Home Assistant Supervised container image based on Debian 12 with systemd and docker"
+
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   systemd \
   apparmor \
   jq \
