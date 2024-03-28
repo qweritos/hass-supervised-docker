@@ -23,8 +23,6 @@ wget -O os-agent_linux_x86_64.deb https://github.com/home-assistant/os-agent/rel
 
 apt install -y ./os-agent_linux_x86_64.deb
 
-rm -rf /etc/docker/*
-
 apt install -y ./supervised-installer/homeassistant-supervised.deb
 
 exec "$@"
