@@ -5,8 +5,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 mount --make-rshared /usr/share/hassio
 
-docker rm -f hassio_supervisor || true
-
 cd /tmp
 
 rm -rf supervised-installer
