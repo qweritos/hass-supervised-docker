@@ -1,5 +1,0 @@
-{
-    "supervisor": "homeassistant/amd64-hassio-supervisor",
-    "machine": "qemux86-64",
-    "data": "/hassio"
-}

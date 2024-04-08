@@ -3,7 +3,7 @@ Description=Install HASS Supervised
 After=docker.service
 
 [Service]
-ExecStart=/entrypoint.sh
+ExecStart=/install.sh
 
 [Install]
 WantedBy=multi-user.target

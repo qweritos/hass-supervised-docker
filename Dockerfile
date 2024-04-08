@@ -8,6 +8,10 @@ LABEL org.opencontainers.image.documentation="https://github.com/qweritos/hass-s
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.description="Home Assistant Supervised container image based on Debian 12 with systemd and docker"
 
+ARG OS_AGENT_VERSION=1.6.0
+ARG SUPERVISED_INSTALLER_GIT_REF=main
+ARG DATA_SHARE=/usr/share/hassio
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y \
@@ -43,20 +47,20 @@ RUN rm -f \
   /etc/systemd/system/etc-hosts.mount
 
 RUN systemctl mask -- \
-  tmp.mount \
-  etc-hostname.mount \
-  etc-hosts.mount \
-  etc-resolv.conf.mount \
-  swap.target \
-  getty.target \
-  getty-static.service \
-  dev-mqueue.mount \
-  cgproxy.service \
-  systemd-tmpfiles-setup-dev.service \
-  systemd-remount-fs.service \
-  systemd-ask-password-wall.path \
-  systemd-logind && \
-  systemctl set-default multi-user.target || true
+      tmp.mount \
+      etc-hostname.mount \
+      etc-hosts.mount \
+      etc-resolv.conf.mount \
+      swap.target \
+      getty.target \
+      getty-static.service \
+      dev-mqueue.mount \
+      cgproxy.service \
+      systemd-tmpfiles-setup-dev.service \
+      systemd-remount-fs.service \
+      systemd-ask-password-wall.path \
+      systemd-logind && \
+      systemctl set-default multi-user.target || true
 
 RUN systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target ModemManager.service
 
@@ -64,7 +68,26 @@ STOPSIGNAL SIGRTMIN+3
 
 ADD ./rootfs /
 
-RUN systemctl enable systemd-journal-remote.service systemd-resolved systemd-journal-gatewayd hass-install avahi-daemon
+RUN systemctl enable systemd-journal-remote.service systemd-resolved systemd-journal-gatewayd hass-install avahi-daemon systemd-journal-gatewayd.socket
 
-# ENTRYPOINT [ "/entrypoint.sh" ]
+# HACK: ignore post-installation scripts
+RUN cd /tmp && wget -O os-agent.deb https://github.com/home-assistant/os-agent/releases/download/${OS_AGENT_VERSION}/os-agent_${OS_AGENT_VERSION}_linux_x86_64.deb && \
+      dpkg --unpack os-agent.deb && \
+      rm /var/lib/dpkg/info/os-agent.postinst -f && \
+      dpkg --configure os-agent && \
+      apt-get install -yf os-agent && \
+      systemctl enable haos-agent
+
+# HACK: skip `systemctl` commands that relies on operational systemd PID 1 instance
+
+ENV DATA_SHARE=${DATA_SHARE}
+ADD ./supervised-installer.patch /tmp
+RUN cd /tmp && git clone https://github.com/home-assistant/supervised-installer.git --depth 1 --branch ${SUPERVISED_INSTALLER_GIT_REF} supervised-installer && \
+      cd supervised-installer && \
+      git apply ../supervised-installer.patch && \
+      dpkg-deb --build --root-owner-group homeassistant-supervised && \
+      apt install -y ./homeassistant-supervised.deb
+
+RUN rm -rf /tmp/*
+
 CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
