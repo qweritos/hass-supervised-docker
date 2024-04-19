@@ -90,4 +90,7 @@ RUN cd /tmp && git clone https://github.com/home-assistant/supervised-installer.
 
 RUN rm -rf /tmp/*
 
+# overwrite docker config file
+ADD ./rootfs/etc/docker/daemon.json /etc/docker/daemon.json
+
 CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
