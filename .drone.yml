@@ -7,3 +7,4 @@ steps:
     image: plugins/docker
     settings:
       repo: registry.andrey.wtf/hass-supervised-docker
+      mirror: https://mirror.gcr.io
