@@ -61,3 +61,23 @@ index c36cf74..b0881c2 100755
      echo "kernel.dmesg_restrict=0" >> /etc/sysctl.conf
  fi
  
+diff --git a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
+index 343203c..daba21a 100644
+--- a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
++++ b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
+@@ -5,7 +5,7 @@ autoconnect-retries-default=0
+ rc-manager=file
+ 
+ [keyfile]
+-unmanaged-devices=type:bridge;type:tun;driver:veth
++unmanaged-devices=type:bridge;type:tun;driver:veth;interface-name:enx00e04c68012d
+ 
+ [logging]
+ backend=journal
+@@ -19,4 +19,4 @@ uri=http://checkonline.home-assistant.io/online.txt
+ interval=600
+ 
+ [device]
+-wifi.scan-rand-mac-address=no
+\ No newline at end of file
++wifi.scan-rand-mac-address=no
