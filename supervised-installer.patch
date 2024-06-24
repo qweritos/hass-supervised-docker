@@ -70,7 +70,7 @@ index 343203c..daba21a 100644
  
  [keyfile]
 -unmanaged-devices=type:bridge;type:tun;driver:veth
-+unmanaged-devices=type:bridge;type:tun;driver:veth;interface-name:enx00e04c68012d
++unmanaged-devices=type:bridge;type:tun;driver:veth;interface-name:enx00e04c68012d;type=macvlan
  
  [logging]
  backend=journal
