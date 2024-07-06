@@ -1,5 +1,5 @@
 diff --git a/homeassistant-supervised/DEBIAN/postinst b/homeassistant-supervised/DEBIAN/postinst
-index 11f337d..45ad90d 100755
+index 19e6c60..e175910 100755
 --- a/homeassistant-supervised/DEBIAN/postinst
 +++ b/homeassistant-supervised/DEBIAN/postinst
 @@ -19,14 +19,6 @@ URL_VERSION="https://version.home-assistant.io/stable.json"
@@ -35,7 +35,7 @@ index 11f337d..45ad90d 100755
 -systemctl restart "${SERVICE_DOCKER}"
 -
  # Check network connection
- while ! ping -c 1 -W 1 ${URL_CHECK_ONLINE}; do
+ while ! curl -q ${URL_CHECK_ONLINE} >/dev/null 2>&1 ; do
      info "Waiting for ${URL_CHECK_ONLINE} - network interface might be down..."
 @@ -153,11 +139,6 @@ sed -i -e "s,%%SERVICE_DOCKER%%,${SERVICE_DOCKER},g" \
  
@@ -62,7 +62,7 @@ index c36cf74..b0881c2 100755
  fi
  
 diff --git a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
-index 343203c..daba21a 100644
+index 343203c..ffcaeb1 100644
 --- a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
 +++ b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
 @@ -5,7 +5,7 @@ autoconnect-retries-default=0
