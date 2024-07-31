@@ -1,4 +1,4 @@
-FROM debian:12
+FROM mirror.gcr.io/debian:12
 
 LABEL org.opencontainers.image.title="Home Assistant Supervised in docker"
 LABEL org.opencontainers.image.authors="Andrey Artamonychev<me@andrey.wtf>"
