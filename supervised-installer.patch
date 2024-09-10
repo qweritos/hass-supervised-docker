@@ -1,3 +1,30 @@
+diff --git a/README.md b/README.md
+index 53abd64..40a8573 100644
+--- a/README.md
++++ b/README.md
+@@ -34,22 +34,6 @@ udisks2 \
+ wget -y
+ ```
+ 
+-If you haven't been using NetworkManager before, you might see instructions on how to let NetworkManager manage the current network interface.
+-
+-```
+-...
+-Setting up network-manager (1.42.4-1) ...
+-
+-The following network interfaces were found in /etc/network/interfaces
+-which means they are currently configured by ifupdown:
+-- enp1s0
+-If you want to manage those interfaces with NetworkManager instead
+-remove their configuration from /etc/network/interfaces.
+-...
+-```
+-
+-Follow these steps before continuing!
+-
+ Step 2: Install Docker-CE with the following command:
+ 
+ ```bash
 diff --git a/homeassistant-supervised/DEBIAN/postinst b/homeassistant-supervised/DEBIAN/postinst
 index 19e6c60..e175910 100755
 --- a/homeassistant-supervised/DEBIAN/postinst
@@ -61,23 +88,3 @@ index c36cf74..b0881c2 100755
      echo "kernel.dmesg_restrict=0" >> /etc/sysctl.conf
  fi
  
-diff --git a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
-index 343203c..ffcaeb1 100644
---- a/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
-+++ b/homeassistant-supervised/etc/NetworkManager/NetworkManager.conf
-@@ -5,7 +5,7 @@ autoconnect-retries-default=0
- rc-manager=file
- 
- [keyfile]
--unmanaged-devices=type:bridge;type:tun;driver:veth
-+unmanaged-devices=type:bridge;type:tun;driver:veth;interface-name:enx00e04c68012d;type=macvlan
- 
- [logging]
- backend=journal
-@@ -19,4 +19,4 @@ uri=http://checkonline.home-assistant.io/online.txt
- interval=600
- 
- [device]
--wifi.scan-rand-mac-address=no
-\ No newline at end of file
-+wifi.scan-rand-mac-address=no
