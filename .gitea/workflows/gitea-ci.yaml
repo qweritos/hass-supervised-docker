@@ -1,0 +1,19 @@
+name: Build And Publish image
+run-name: ${{ gitea.actor }} is runs ci pipeline
+on: [ push ]
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: registry.andrey.wtf/hass-supervised-docker
