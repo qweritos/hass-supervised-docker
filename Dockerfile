@@ -33,7 +33,9 @@ RUN apt-get update && apt-get install -y \
   iproute2 \
   httping \
   avahi-daemon avahi-utils libnss-mdns \
-  bash-completion
+  bash-completion \
+  ca-certificates curl \
+  fuse-overlayfs
 
 RUN curl -fsSL get.docker.com | sh
 
@@ -93,4 +95,5 @@ RUN rm -rf /tmp/*
 # overwrite docker config file
 ADD ./rootfs/etc/docker/daemon.json /etc/docker/daemon.json
 
-CMD ["/sbin/init", "--log-level=info", "--log-target=console"]
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["/sbin/init", "--log-level=debug", "--log-target=console"]
