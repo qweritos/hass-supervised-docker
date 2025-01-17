@@ -1,4 +1,4 @@
-FROM mirror.gcr.io/debian:12
+FROM debian:stable-slim
 
 LABEL org.opencontainers.image.title="Home Assistant Supervised in docker"
 LABEL org.opencontainers.image.authors="Andrey Artamonychev<me@andrey.wtf>"
@@ -12,14 +12,20 @@ ARG OS_AGENT_VERSION=1.6.0
 ARG SUPERVISED_INSTALLER_GIT_REF=main
 ARG DATA_SHARE=/usr/share/hassio
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y ca-certificates curl
+RUN install -m 0755 -d /etc/apt/keyrings && \
+  curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+  chmod a+r /etc/apt/keyrings/docker.asc && \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
   systemd \
   apparmor \
   jq \
   wget \
-  curl \
   udisks2 \
   libglib2.0-bin \
   network-manager \
@@ -32,12 +38,11 @@ RUN apt-get update && apt-get install -y \
   bluez \
   iproute2 \
   httping \
+  git \
   avahi-daemon avahi-utils libnss-mdns \
   bash-completion \
-  ca-certificates curl \
-  fuse-overlayfs
-
-RUN curl -fsSL get.docker.com | sh
+  fuse-overlayfs \
+  docker-ce docker-ce-cli containerd.io
 
 RUN rm -f \
   /lib/systemd/system/sockets.target.wants/*udev* \
@@ -81,7 +86,6 @@ RUN cd /tmp && wget -O os-agent.deb https://github.com/home-assistant/os-agent/r
       systemctl enable haos-agent
 
 # HACK: skip `systemctl` commands that relies on operational systemd PID 1 instance
-
 ENV DATA_SHARE=${DATA_SHARE}
 ADD ./supervised-installer.patch /tmp
 RUN cd /tmp && git clone https://github.com/home-assistant/supervised-installer.git --depth 1 --branch ${SUPERVISED_INSTALLER_GIT_REF} supervised-installer && \
@@ -92,7 +96,7 @@ RUN cd /tmp && git clone https://github.com/home-assistant/supervised-installer.
 
 RUN rm -rf /tmp/*
 
-# overwrite docker config file
+# overwrite docker config file that has been altered by homeassistant-supervised.deb
 ADD ./rootfs/etc/docker/daemon.json /etc/docker/daemon.json
 
 ENTRYPOINT [ "/entrypoint.sh" ]
