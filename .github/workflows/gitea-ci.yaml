@@ -1,6 +1,6 @@
 name: Build And Publish image
-run-name: ${{ gitea.actor }} is runs ci pipeline
-on: [ push ]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,4 +16,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: registry.andrey.wtf/hass-supervised-docker
+          tags: qweritos/hass-supervised-docker
