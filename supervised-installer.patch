@@ -1,37 +1,10 @@
-diff --git a/README.md b/README.md
-index 53abd64..40a8573 100644
---- a/README.md
-+++ b/README.md
-@@ -34,22 +34,6 @@ udisks2 \
- wget -y
- ```
- 
--If you haven't been using NetworkManager before, you might see instructions on how to let NetworkManager manage the current network interface.
--
--```
--...
--Setting up network-manager (1.42.4-1) ...
--
--The following network interfaces were found in /etc/network/interfaces
--which means they are currently configured by ifupdown:
--- enp1s0
--If you want to manage those interfaces with NetworkManager instead
--remove their configuration from /etc/network/interfaces.
--...
--```
--
--Follow these steps before continuing!
--
- Step 2: Install Docker-CE with the following command:
- 
- ```bash
 diff --git a/homeassistant-supervised/DEBIAN/postinst b/homeassistant-supervised/DEBIAN/postinst
-index 19e6c60..e175910 100755
+index a481d14..723ed5b 100755
 --- a/homeassistant-supervised/DEBIAN/postinst
 +++ b/homeassistant-supervised/DEBIAN/postinst
 @@ -19,14 +19,6 @@ URL_VERSION="https://version.home-assistant.io/stable.json"
  HASSIO_VERSION=$(curl -s ${URL_VERSION} | jq -e -r '.supervisor')
- URL_APPARMOR_PROFILE="https://version.home-assistant.io/apparmor.txt"
+ URL_APPARMOR_PROFILE="https://version.home-assistant.io/apparmor_stable.txt"
  
 -# reload systemd
 -info "Reload systemd"
@@ -64,7 +37,7 @@ index 19e6c60..e175910 100755
  # Check network connection
  while ! curl -q ${URL_CHECK_ONLINE} >/dev/null 2>&1 ; do
      info "Waiting for ${URL_CHECK_ONLINE} - network interface might be down..."
-@@ -153,11 +139,6 @@ sed -i -e "s,%%SERVICE_DOCKER%%,${SERVICE_DOCKER},g" \
+@@ -161,11 +147,6 @@ sed -i -e "s,%%SERVICE_DOCKER%%,${SERVICE_DOCKER},g" \
  
  chmod a+x "${PREFIX}/sbin/hassio-apparmor"
  systemctl enable hassio-apparmor.service > /dev/null 2>&1;
@@ -77,10 +50,10 @@ index 19e6c60..e175910 100755
  # Install HA CLI
  info "Installing the 'ha' cli"
 diff --git a/homeassistant-supervised/DEBIAN/preinst b/homeassistant-supervised/DEBIAN/preinst
-index c36cf74..b0881c2 100755
+index 68c8a1c..55c65bf 100755
 --- a/homeassistant-supervised/DEBIAN/preinst
 +++ b/homeassistant-supervised/DEBIAN/preinst
-@@ -47,7 +47,6 @@ fi
+@@ -50,7 +50,6 @@ fi
  # Check dmesg access
  if [[ "$(sysctl --values kernel.dmesg_restrict)" != "0" ]]; then
      info "Fix kernel dmesg restriction"
