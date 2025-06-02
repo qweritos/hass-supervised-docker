@@ -8,3 +8,4 @@ persistence:
 
   docker:
     mountPath: /var/lib/docker
+
