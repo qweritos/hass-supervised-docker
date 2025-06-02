@@ -31,11 +31,14 @@ spec:
                   name: metrics
               volumeMounts:
                 - name: hass
-                  mountPath: /usr/share/hassio
+                  mountPath: {{ .Values.persistence.config.mountPath | default "/usr/share/hassio" }}
                 - name: docker
-                  mountPath: /var/lib/docker
+                  mountPath: {{ .Values.persistence.docker.mountPath | default "/var/lib/docker" }}
                 - name: security
                   mountPath: /sys/kernel/security
+                {{- with .Values.volumeMounts }}
+                {{- toYaml . | nindent 14 }}
+                {{- end }}
               livenessProbe:
                 httpGet:
                   path: /
@@ -46,13 +49,16 @@ spec:
           volumes:
             - name: security
               hostPath:
-                  path: '/sys/kernel/security'
+                path: '/sys/kernel/security'
             - name: docker
               persistentVolumeClaim:
-                  claimName: hass-docker-pvc
+                claimName: {{ .Values.persistence.docker.existingClaim | default (printf "%s-docker-pvc" $fullName) }}
             - name: hass
               persistentVolumeClaim:
-                  claimName: hass-pvc
+                claimName: {{ .Values.persistence.config.existingClaim | default (printf "%s-config-pvc" $fullName) }}
+            {{- with .Values.volumes }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           affinity:
               nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
