@@ -4,9 +4,7 @@ volumeMounts: []
 
 persistence:
   config:
-    existingClaim: hass-pvc
     mountPath: /usr/share/hassio
 
   docker:
-    existingClaim: hass-docker-pvc
     mountPath: /var/lib/docker

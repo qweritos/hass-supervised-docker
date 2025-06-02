@@ -71,49 +71,6 @@ spec:
 
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-    name: hass-docker-pvc
-spec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-        requests:
-            storage: 10Gi
-
----
-
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: hass-pvc
-  namespace: {{ .Release.Namespace }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Gi
-  storageClassName: piraeus-storage
-  volumeName: hass-pv
-
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: hass-pv
-spec:
-  capacity:
-    storage: 100Gi
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: piraeus-storage
-  csi:
-    driver: linstor.csi.linbit.com
-    volumeHandle: hass
-
----
-apiVersion: v1
 kind: Service
 metadata:
     name: {{ $fullName }}
