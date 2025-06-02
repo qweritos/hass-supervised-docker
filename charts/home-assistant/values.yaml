@@ -3,9 +3,5 @@ volumes: []
 volumeMounts: []
 
 persistence:
-  config:
-    mountPath: /usr/share/hassio
-
-  docker:
-    mountPath: /var/lib/docker
-
+  config: {}
+  docker: {}

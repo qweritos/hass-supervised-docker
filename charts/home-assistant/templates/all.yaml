@@ -32,9 +32,9 @@ spec:
                   name: metrics
               volumeMounts:
                 - name: hass
-                  mountPath: {{ .Values.persistence.config.mountPath | default "/usr/share/hassio" }}
+                  mountPath: /usr/share/hassio
                 - name: docker
-                  mountPath: {{ .Values.persistence.docker.mountPath | default "/var/lib/docker" }}
+                  mountPath: /var/lib/docker
                 - name: security
                   mountPath: /sys/kernel/security
                 {{- with .Values.volumeMounts }}
@@ -53,10 +53,10 @@ spec:
                 path: '/sys/kernel/security'
             - name: docker
               persistentVolumeClaim:
-                claimName: {{ .Values.persistence.docker.existingClaim | default (printf "%s-docker-pvc" $fullName) }}
+                claimName: {{ .Values.persistence.docker.existingClaim }}
             - name: hass
               persistentVolumeClaim:
-                claimName: {{ .Values.persistence.config.existingClaim | default (printf "%s-config-pvc" $fullName) }}
+                claimName: {{ .Values.persistence.config.existingClaim }}
             {{- with .Values.volumes }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
