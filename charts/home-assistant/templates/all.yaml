@@ -14,7 +14,7 @@ spec:
             labels:
               app: {{ $fullName }}
             annotations:
-             container.apparmor.security.beta.kubernetes.io/hass-supervised-docker: unconfined
+              container.apparmor.security.beta.kubernetes.io/hass-supervised-docker: unconfined
         spec:
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
@@ -70,7 +70,6 @@ spec:
                                 - hs1
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -95,7 +94,7 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  storageClassName: ""
+  storageClassName: piraeus-storage
   volumeName: hass-pv
 
 ---
@@ -103,19 +102,17 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: hass-pv
-  labels:
-    type: local
 spec:
-  storageClassName: ""
   capacity:
     storage: 100Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/storage/data/hass"
+  storageClassName: piraeus-storage
+  csi:
+    driver: linstor.csi.linbit.com
+    volumeHandle: hass
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -134,8 +131,8 @@ spec:
         port: 9323
         protocol: TCP
         targetPort: 9323
----
 
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
