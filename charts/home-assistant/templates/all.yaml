@@ -1,10 +1,6 @@
 {{- $fullName := include "home-assistant.fullname" . -}}
 
 
-
-
-
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -36,11 +32,15 @@ spec:
                   name: metrics
               volumeMounts:
                 - name: hass
-                  mountPath: /usr/share/hassio
+                  mountPath: /usr/share/hassio2
                 - name: docker
                   mountPath: /var/lib/docker
                 - name: security
                   mountPath: /sys/kernel/security
+                  
+                {{- with .Values.volumeMounts }}
+                {{- toYaml . | nindent 14 }}
+                {{- end }}
               livenessProbe:
                 httpGet:
                   path: /
@@ -58,7 +58,9 @@ spec:
             - name: hass
               persistentVolumeClaim:
                 claimName: {{ .Values.persistence.config.existingClaim }}
-
+            {{- with .Values.volumes }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           affinity:
               nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
