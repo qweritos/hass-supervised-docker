@@ -37,7 +37,6 @@ spec:
                   mountPath: /var/lib/docker
                 - name: security
                   mountPath: /sys/kernel/security
-
                 {% comment %} {{- with .Values.volumeMounts }}
                 {{- toYaml . | nindent 14 }}
                 {{- end }} {% endcomment %}
