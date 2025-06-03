@@ -49,12 +49,6 @@ spec:
             - name: security
               hostPath:
                 path: '/sys/kernel/security'
-            - name: docker
-              persistentVolumeClaim:
-                claimName: {{ .Values.persistence.docker.existingClaim }}
-            - name: hass
-              persistentVolumeClaim:
-                claimName: {{ .Values.persistence.config.existingClaim }}
 
           affinity:
               nodeAffinity:
