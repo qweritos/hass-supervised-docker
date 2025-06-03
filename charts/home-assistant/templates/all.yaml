@@ -6,7 +6,7 @@ kind: StatefulSet
 metadata:
     name: {{ $fullName }}
 spec:
-    replicas: 0
+    replicas: 1
     selector:
         matchLabels:
           app: {{ $fullName }}
@@ -37,6 +37,9 @@ spec:
                   mountPath: /var/lib/docker
                 - name: security
                   mountPath: /sys/kernel/security
+                {{- with .Values.volumeMounts }}
+                {{- toYaml . | nindent 14 }}
+                {{- end }}
               livenessProbe:
                 httpGet:
                   path: /
@@ -54,6 +57,9 @@ spec:
             - name: hass
               persistentVolumeClaim:
                 claimName: {{ .Values.persistence.config.existingClaim }}
+            {{- with .Values.volumes }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           affinity:
               nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
