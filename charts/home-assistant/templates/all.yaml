@@ -37,9 +37,10 @@ spec:
                   mountPath: /var/lib/docker
                 - name: security
                   mountPath: /sys/kernel/security
-                {% comment %} {{- with .Values.volumeMounts }}
-                {{- toYaml . | nindent 14 }}
-                {{- end }} {% endcomment %}
+                  
+                {{- with .Values.volumeMounts }}
+                {{- toYaml . | nindent 12 }}
+                {{- end }}
               livenessProbe:
                 httpGet:
                   path: /
@@ -57,9 +58,9 @@ spec:
             - name: hass
               persistentVolumeClaim:
                 claimName: {{ .Values.persistence.config.existingClaim }}
-            {% comment %} {{- with .Values.volumes }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }} {% endcomment %}
+            {{- with .Values.volumes }}
+            {{- toYaml . | nindent 10 }}
+            {{- end }}
           affinity:
               nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
