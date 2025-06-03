@@ -6,7 +6,7 @@ kind: StatefulSet
 metadata:
     name: {{ $fullName }}
 spec:
-    replicas: 1
+    replicas: 0
     selector:
         matchLabels:
           app: {{ $fullName }}
@@ -42,8 +42,7 @@ spec:
                   path: /
                   port: web
                 initialDelaySeconds: 900
-                
-                periodSeconds: 51
+                periodSeconds: 5
                 failureThreshold: 10
           volumes:
             - name: security
