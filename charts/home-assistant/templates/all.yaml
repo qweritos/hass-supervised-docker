@@ -42,6 +42,7 @@ spec:
                   path: /
                   port: web
                 initialDelaySeconds: 900
+                
                 periodSeconds: 51
                 failureThreshold: 10
           volumes:
