@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:12-slim
 
 LABEL org.opencontainers.image.title="Home Assistant Supervised in docker"
 LABEL org.opencontainers.image.authors="Andrey Artamonychev<me@andrey.wtf>"
