@@ -20,7 +20,7 @@ spec:
           dnsPolicy: ClusterFirstWithHostNet
           containers:
             - name: hass-supervised-docker
-              image: registry.andrey.wtf/hass-supervised-docker
+              image: qweritos/hass-supervised-docker
               imagePullPolicy: Always
               securityContext:
                   privileged: true
